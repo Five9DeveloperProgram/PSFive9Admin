@@ -10,7 +10,7 @@ This fork is maintained by Five9.
 
 ### Getting Started
 
-    #### Prerequisites (Run these commands once only)
+#### Prerequisites (Run these commands once only)
 
     # Force TLS 1.2
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
