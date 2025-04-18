@@ -1,11 +1,11 @@
 [![PS Gallery](https://img.shields.io/badge/install-PS%20Gallery-blue.svg)](https://www.powershellgallery.com/packages/PSFive9Admin/)  
-&nbsp;
 
  
  # PSFive9Admin
-Powershell functions for working with the Five9 Admin Web Service API
-&nbsp;
-&nbsp;
+Powershell functions for working with the Five9 Admin Web Service API.  
+
+This is a fork of the original project created by [sqone2](https://github.com/sqone2), licensed under the MIT License.
+This fork is maintained by Five9.
 #
 
 ### Getting Started
@@ -33,13 +33,11 @@ Powershell functions for working with the Five9 Admin Web Service API
 
 # 
 
-
-&nbsp;
 ### Examples
 
-&nbsp;
-![Examples](https://github.com/sqone2/PSFive9Admin/blob/master/assets/psfive9admin-example.png)
-&nbsp;
+
+![Examples](https://github.com/Five9DeveloperProgram/PSFive9Admin/blob/master/assets/psfive9admin-example.png)
+
 
 #
 
@@ -47,17 +45,17 @@ Get existing user:
 
      Get-Five9User -NamePattern "jdoe@domain.com"
 
-&nbsp;
+
 Create a new user:
 
     New-Five9User -DefaultRole Agent -FirstName "Susan" -LastName "Davis" -UserName sdavis@domain.com -Email sdavis@domain.com -Password 'P@ssword!'
 
-&nbsp;
+
 Create a new skill:
 
     New-Five9Skill -Name "MultiMedia"
     
-&nbsp;  
+  
 Add new user to new skill:
 
     Add-Five9SkillMember -Name "Multimedia" -Username "sdavis@domain.com"
