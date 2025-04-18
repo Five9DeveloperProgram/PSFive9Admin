@@ -36,7 +36,7 @@ This fork is maintained by Five9.
 ### Examples
 
 
-![Examples](https://github.com/Five9DeveloperProgram/PSFive9Admin/blob/master/assets/psfive9admin-example.png)
+![Examples](https://github.com/Five9DeveloperProgram/PSFive9Admin/blob/main/assets/psfive9admin-example.png)
 
 
 #
