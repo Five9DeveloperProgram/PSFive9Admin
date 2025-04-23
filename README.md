@@ -10,7 +10,10 @@ This fork is maintained by Five9.
 
 ### Getting Started
 
+**Note**: This library is compatible with Powershell 5.1 and is **not** compatible with Powershell 7 (on Windows or on Mac).  If you would like to contribute to the `powershell75` branch.
+
 #### Prerequisites (Run these commands once only)
+
 
     # Force TLS 1.2
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
