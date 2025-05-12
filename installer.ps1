@@ -74,6 +74,8 @@ try {
     } else {
         Write-Host "✅ Module '$moduleName' installed successfully at '$modulePath'."
     }
+    # write a message to the user about how to use the module with a blank line
+    Write-Host "`n🔗 To use the module, run: Connect-Five9AdminWebService -Verbose"
 }
 catch {
     Write-Error $_.Exception.Message
