@@ -17,7 +17,7 @@ This fork is maintained by Five9.
 You can install or update `PSFive9Admin` by running this command in any PowerShell session:
 
 ```powershell
-iex "& { (Invoke-WebRequest 'https://raw.githubusercontent.com/Five9DeveloperProgram/PSFive9Admin/main/installer.ps1').Content }"
+irm 'https://raw.githubusercontent.com/Five9DeveloperProgram/PSFive9Admin/main/installer.ps1' | iex
 ```
 
 
