@@ -14,50 +14,11 @@ This fork is maintained by Five9.
 
 #### Prerequisites (Run these commands once only)
 ##### Option 1: Install without using Git
-    # Set TLS 1.2
-    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+You can install or update `PSFive9Admin` by running this command in any PowerShell session:
 
-    # Get the code from GitHub, Define paths
-    $zipUrl = "https://github.com/Five9DeveloperProgram/PSFive9Admin/archive/refs/heads/main.zip"
-    $modulePath = "$env:USERPROFILE\Documents\WindowsPowerShell\Modules\PSFive9Admin"
-    $tempZip = "$env:TEMP\PSFive9Admin.zip"
-    $tempExtract = "$env:TEMP\PSFive9Admin"
-
-    # Clean up old files if necessary
-    Remove-Item $tempZip -Force -ErrorAction SilentlyContinue
-    Remove-Item $tempExtract -Recurse -Force -ErrorAction SilentlyContinue
-    Remove-Item $modulePath -Recurse -Force -ErrorAction SilentlyContinue
-
-    # Download and extract
-    Invoke-WebRequest -Uri $zipUrl -OutFile $tempZip
-    Expand-Archive -Path $tempZip -DestinationPath $tempExtract -Force
-    Copy-Item "$tempExtract\PSFive9Admin-main" -Destination $modulePath -Recurse
-
-    # Set execution policy if needed
-    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope: CurrentUser -Force
-
-    # Import module
-    Import-Module PSFive9Admin -Force
-
-#### Option 2: Install with Git (you'll know if you have this)
-    # Set TLS 1.2
-    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-
-    # Define module path
-    $moduleParent = "$env:USERPROFILE\Documents\WindowsPowerShell\Modules"
-    $modulePath = Join-Path $moduleParent "PSFive9Admin"
-
-    # Remove old module (optional)
-    Remove-Item $modulePath -Recurse -Force -ErrorAction SilentlyContinue
-
-    # Clone the repo
-    git clone https://github.com/Five9DeveloperProgram/PSFive9Admin.git $modulePath
-
-    # Set execution policy if needed
-    Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope: CurrentUser -Force
-
-    # Import module
-    Import-Module PSFive9Admin -Force
+```powershell
+iex "& { (Invoke-WebRequest 'https://raw.githubusercontent.com/Five9DeveloperProgram/PSFive9Admin/main/installer.ps1').Content }"
+```
 
 
 ### Connect to a Five9 domain
@@ -118,4 +79,4 @@ Under the MIT License:
 - The code may not account for all use cases or meet specific requirements without further development.
 - Five9 assumes **no liability** and provides **no support** for issues arising from the use of this code.
 
-For production-ready solutions or tailored implementations, we strongly recommend working with Five9’s Professional Services and Technical Account Management teams.
+For production-ready tailored implementations, we strongly recommend working with Five9’s Professional Services and Technical Account Management teams.
