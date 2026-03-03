@@ -10,14 +10,41 @@ This fork is maintained by Five9.
 
 ### Getting Started
 
-**Note**: This library is compatible with Powershell 5.1 and is **not** compatible with Powershell 7 (on Windows or on Mac).  If you would like to contribute to the `powershell75` branch.
+**✨ NEW**: This library now supports **both PowerShell 5.1 and PowerShell 7+** (Windows, macOS, and Linux)!
 
-#### Prerequisites (Run these commands once only)
-##### Option 1: Install without using Git
+**Compatibility:**
+- ✅ Windows PowerShell 5.1 
+- ✅ PowerShell 7.0+ (Windows, macOS, Linux)
+
+**📚 Documentation:**
+- [Migration Guide](MIGRATION-GUIDE.md) - Complete PowerShell 7 migration guide
+- [Changelog](CHANGELOG.md) - Recent changes and updates
+- [Technical Details](PS7-COMPATIBILITY.md) - Implementation architecture
+
+#### Installation
+
+##### Option 1: Install from PowerShell Gallery (Recommended)
+```powershell
+Install-Module -Name PSFive9Admin -Scope CurrentUser
+```
+
+##### Option 2: Install from GitHub
 You can install or update `PSFive9Admin` by running this command in any PowerShell session:
 
 ```powershell
-irm 'https://raw.githubusercontent.com/Five9DeveloperProgram/PSFive9Admin/main/installer.ps1' | iex
+irm 'https://raw.githubusercontent.com/Five9DeveloperProgram/PSFive9Admin/main/PSFive9Admin-installer.ps1' | iex
+```
+
+##### Option 3: Install via Git Clone
+```powershell
+# Clone the repository
+git clone https://github.com/Five9DeveloperProgram/PSFive9Admin.git
+
+# Navigate to module directory
+cd PSFive9Admin
+
+# Import the module
+Import-Module ./PSFive9Admin.psd1
 ```
 
 
