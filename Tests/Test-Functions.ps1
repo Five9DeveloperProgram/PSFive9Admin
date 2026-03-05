@@ -8,7 +8,7 @@ if (-not $cred) {
     exit 1
 }
 
-Import-Module ./PSFive9Admin.psd1 -Force
+Import-Module (Join-Path $PSScriptRoot "../PSFive9Admin.psd1") -Force
 Connect-Five9AdminWebService -Credential $cred | Out-Null
 
 Write-Host "`n=== Testing Get-Five9AgentGroup ===" -ForegroundColor Cyan

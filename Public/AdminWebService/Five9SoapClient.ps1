@@ -57,7 +57,17 @@ class Five9SoapClient {
             return $this.ParseSoapResponse($responseContent, $methodName)
         }
         catch {
-            throw "Error invoking SOAP method '$methodName': $($_.Exception.Message)"
+            $message = @"
+Failed to connect to Five9 API. Common causes:
+1. Invalid credentials
+2. Domain ID not accessible
+3. Network/firewall blocking HTTPS to Five9
+4. Five9 API maintenance window
+
+Method: $methodName
+Error: $($_.Exception.Message)
+"@
+            throw $message
         }
     }
     

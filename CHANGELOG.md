@@ -11,14 +11,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **PowerShell 7+ Support** - Module now works on PowerShell 7.0+ across Windows, macOS, and Linux
 - New `Five9SoapClient.ps1` - HTTP-based SOAP client for PowerShell 7+ compatibility
 - New `Add-Five9SoapMethods.ps1` - Dynamic method wrapper generation
-- Test scripts: `Test-Connection.ps1`, `Test-Functions.ps1`, `Test-PS7Compatibility.ps1`
-- Documentation: `MIGRATION-GUIDE.md`, `PS7-COMPATIBILITY.md`, `QUICKSTART.md`, `CHANGELOG.md`
+- Test scripts: `Tests/Test-Connection.ps1`, `Tests/Test-Functions.ps1`, `Tests/Test-PS7Compatibility.ps1`
+- Documentation: `MIGRATION-GUIDE.md`, `CHANGELOG.md`, `DOCUMENTATION-REVIEW.md`
+- New example scripts in `assets/ExampleScripts/`
+- New `CONTRIBUTING.md` contributor guide
 
 ### Changed
 - `Connect-Five9AdminWebService.ps1` - Now auto-detects PowerShell version and uses appropriate SOAP client
 - Module automatically switches between `New-WebServiceProxy` (PS 5.1) and custom HTTP client (PS 7+)
 - Updated README with accurate PowerShell 7 compatibility information
-- Fixed QUICKSTART.md file path references
+- Fixed documentation file path references
+- Improved SOAP error messaging in `Five9SoapClient.ps1`
 
 ### Security
 - Removed hardcoded test credentials from all test scripts
@@ -58,4 +61,4 @@ Connect-Five9AdminWebService
 # All your existing scripts just work!
 ```
 
-See [PS7-COMPATIBILITY.md](PS7-COMPATIBILITY.md) for technical details.
+See [MIGRATION-GUIDE.md](MIGRATION-GUIDE.md) for technical details.

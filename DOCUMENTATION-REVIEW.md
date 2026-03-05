@@ -42,7 +42,7 @@ You currently have **4 different PS7-related docs**:
 
 #### 3. **Update Module Version Number**
 **File:** `PSFive9Admin.psd1`
-- **Current Version:** 1.0.128
+- **Current Version:** 1.1.0
 - **Recommended:** 1.1.0 (minor version bump for new PS7 feature)
 - **Line to Update:** Line 12 `ModuleVersion = '1.1.0'`
 
@@ -81,8 +81,7 @@ You currently have **4 different PS7-related docs**:
 #### 7. **Enhance README with Badges**
 Add status badges to top of README:
 ```markdown
-[![PowerShell Gallery](https://img.shields.io/powershellgallery/v/PSFive9Admin.svg)](https://www.powershellgallery.com/packages/PSFive9Admin)
-[![PowerShell Gallery](https://img.shields.io/powershellgallery/dt/PSFive9Admin.svg)](https://www.powershellgallery.com/packages/PSFive9Admin)
+[![GitHub](https://img.shields.io/badge/source-GitHub-181717.svg?logo=github)](https://github.com/Five9DeveloperProgram/PSFive9Admin)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 ```
 
@@ -119,7 +118,7 @@ Include architecture diagram showing:
 
 #### 11. **Create VIDEO Tutorial**
 Record 5-minute walkthrough:
-- Installing module from PowerShell Gallery
+- Installing module from GitHub
 - Connecting to Five9
 - Running 3 common commands
 - Troubleshooting connection issues
@@ -141,11 +140,11 @@ Use this before pushing to Git:
 - [x] README.md updated with accurate PS7 compatibility
 - [x] CHANGELOG.md created with version history
 - [x] MIGRATION-GUIDE.md created for users
-- [ ] PS7-SUCCESS.md removed (internal only)
-- [ ] QUICKSTART.md consolidated into MIGRATION-GUIDE
-- [ ] PS7-COMPATIBILITY.md consolidated into MIGRATION-GUIDE
-- [ ] CONTRIBUTING.md created (recommended)
-- [ ] FAQ section added to README (recommended)
+- [x] PS7-SUCCESS.md removed (internal only)
+- [x] QUICKSTART.md consolidated into MIGRATION-GUIDE
+- [x] PS7-COMPATIBILITY.md consolidated into MIGRATION-GUIDE
+- [x] CONTRIBUTING.md created (recommended)
+- [x] FAQ section added to README (recommended)
 
 ### Code Quality
 - [x] Five9SoapClient.ps1 functional
@@ -159,14 +158,14 @@ Use this before pushing to Git:
 ### Security
 - [x] No hardcoded credentials in any files
 - [x] Test scripts use Get-Credential
-- [ ] Review .gitignore for sensitive files
+- [x] Review .gitignore for sensitive files
 - [ ] Verify no API keys or tokens in commit history
 
 ### Repository Structure
-- [ ] Move Test-*.ps1 files to Tests/ folder
-- [ ] Remove any unused files (Five9SoapClient.cs, Five9AdminClient/ folder if present)
-- [ ] Add example scripts to assets/ExampleScripts/
-- [ ] Update module version to 1.1.0 in PSFive9Admin.psd1
+- [x] Move Test-*.ps1 files to Tests/ folder
+- [x] Remove any unused files (Five9SoapClient.cs, Five9AdminClient/ folder if present)
+- [x] Add example scripts to assets/ExampleScripts/
+- [x] Update module version to 1.1.0 in PSFive9Admin.psd1
 
 ### Testing
 - [ ] Import module successfully in PS 7.5.4
@@ -179,7 +178,7 @@ Use this before pushing to Git:
 ### Publishing
 - [ ] Git commit with clear message: "feat: Add PowerShell 7+ support via HTTP-based SOAP client"
 - [ ] Git tag with version: `v1.1.0`
-- [ ] Update PowerShell Gallery listing
+- [ ] Update PowerShell Gallery listing (optional/deferred - external profile ownership)
 - [ ] Announce in Five9 Developer Program
 
 ---
@@ -244,6 +243,7 @@ PSFive9Admin/
 │   ├── ExampleScripts/                # Working examples
 │   │   ├── Get-Five9UsersReport.ps1   # [NEW]
 │   │   ├── Bulk-CreateAgentGroups.ps1 # [NEW]
+│   │   ├── Export-CampaignData.ps1    # [NEW]
 │   │   └── SkillProfileCleanupScript/
 │   └── psfive9admin-example.png
 ├── Public/
@@ -257,6 +257,7 @@ PSFive9Admin/
     ├── Test-Connection.ps1             # [MOVED from root]
     ├── Test-Functions.ps1              # [MOVED from root]
     ├── Test-PS7Compatibility.ps1       # [MOVED from root]
+    ├── Test-GetUsers-Debug.ps1          # [MOVED from root]
     ├── AgentGroup.Tests.ps1
     └── CallVariables.Tests.ps1
 ```
@@ -277,7 +278,7 @@ PSFive9Admin/
 2. Add example scripts
 3. Create CONTRIBUTING.md
 4. Add FAQ to README
-5. Publish to PowerShell Gallery
+5. Optional: Publish to PowerShell Gallery (only if account ownership is recovered)
 
 ### Long Term (Future Releases)
 1. Add visual diagrams

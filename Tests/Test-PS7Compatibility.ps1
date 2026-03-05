@@ -4,7 +4,7 @@ Write-Host "Testing Five9 PowerShell 7+ SOAP Client..." -ForegroundColor Cyan
 Write-Host "PowerShell Version: $($PSVersionTable.PSVersion)" -ForegroundColor Yellow
 
 # Import the module
-$modulePath = Join-Path $PSScriptRoot "PSFive9Admin.psd1"
+$modulePath = Join-Path $PSScriptRoot "../PSFive9Admin.psd1"
 if (Test-Path $modulePath)
 {
     Import-Module $modulePath -Force
@@ -17,7 +17,7 @@ else
 }
 
 # Test loading the SOAP client class
-$soapClientPath = Join-Path $PSScriptRoot "Public/AdminWebService/Five9SoapClient.psm1"
+$soapClientPath = Join-Path $PSScriptRoot "../Public/AdminWebService/Five9SoapClient.ps1"
 if (Test-Path $soapClientPath)
 {
     . $soapClientPath
@@ -37,7 +37,7 @@ if (Test-Path $soapClientPath)
 }
 else
 {
-    Write-Host "✗ Five9SoapClient.psm1 not found" -ForegroundColor Red
+    Write-Host "✗ Five9SoapClient.ps1 not found" -ForegroundColor Red
 }
 
 Write-Host "`nTo test with real credentials, run:" -ForegroundColor Cyan

@@ -10,7 +10,7 @@ Write-Host "PowerShell Version: $($PSVersionTable.PSVersion)" -ForegroundColor Y
 try {
     # Import module
     Write-Host "`nImporting module..." -ForegroundColor Cyan
-    Import-Module ./PSFive9Admin.psd1 -Force
+    Import-Module (Join-Path $PSScriptRoot "../PSFive9Admin.psd1") -Force
     Write-Host "✓ Module imported" -ForegroundColor Green
     
     # Get credentials

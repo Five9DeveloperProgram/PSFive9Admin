@@ -9,11 +9,11 @@ PSFive9Admin now supports **PowerShell 7+** while maintaining full backward comp
 ### Installation
 
 ```powershell
-# Install from PowerShell Gallery (recommended)
-Install-Module -Name PSFive9Admin
-
-# Or install from GitHub
+# Install from GitHub (recommended)
 irm 'https://raw.githubusercontent.com/Five9DeveloperProgram/PSFive9Admin/main/PSFive9Admin-installer.ps1' | iex
+
+# Optional: Install from PowerShell Gallery (if available)
+Install-Module -Name PSFive9Admin
 ```
 
 ### Basic Usage
@@ -105,6 +105,33 @@ Five9 SOAP API
 - ✅ **Maintainable** - Easy to extend with new methods
 - ✅ **Backward compatible** - Zero breaking changes
 
+### SOAP Details (Appendix)
+
+**SOAP Envelope Format (SOAP 1.1)**
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
+                                    xmlns:ser="http://service.admin.ws.five9.com/">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <ser:getVCCConfiguration/>
+    </soapenv:Body>
+</soapenv:Envelope>
+```
+
+**Authentication**
+```powershell
+$credBytes = [System.Text.Encoding]::UTF8.GetBytes("${username}:${password}")
+$credBase64 = [Convert]::ToBase64String($credBytes)
+$HttpClient.DefaultRequestHeaders.Authorization = 
+        [System.Net.Http.Headers.AuthenticationHeaderValue]::new("Basic", $credBase64)
+```
+
+**Response Parsing Notes**
+- XML is parsed with `[xml]` and converted to `PSCustomObject` instances
+- Arrays are detected by repeated elements and normalized to collections
+- SOAP faults are detected and thrown as exceptions
+
 ## Known Limitations
 
 ### Parameter Mapping
@@ -151,10 +178,13 @@ Connect-Five9AdminWebService -Verbose
 
 ```powershell
 # Run connection test
-.\Test-Connection.ps1
+.\Tests\Test-Connection.ps1
 
 # Test specific functions
-.\Test-Functions.ps1
+.\Tests\Test-Functions.ps1
+
+# Quick PS7 client smoke test
+.\Tests\Test-PS7Compatibility.ps1
 ```
 
 ### Common Issues

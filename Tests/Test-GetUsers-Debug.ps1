@@ -1,5 +1,5 @@
 # Debug script to test Get-Five9User
-Import-Module ./PSFive9Admin.psd1 -Force
+Import-Module (Join-Path $PSScriptRoot "../PSFive9Admin.psd1") -Force
 
 $cred = Get-Credential -Message "Enter Five9 credentials"
 Connect-Five9AdminWebService -Credential $cred
