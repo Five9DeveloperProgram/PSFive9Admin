@@ -87,31 +87,74 @@
         }
 
 
-        $wsdl = "https://$baseUrl/wsadmin/v$($Version)/AdminWebService?wsdl&user=$($Credential.Username)"
+        $endpointUrl = "https://$baseUrl/wsadmin/v$($Version)/AdminWebService"
 
 
-        Write-Verbose "Connecting to: $($wsdl)"
+        Write-Verbose "Connecting to: $($endpointUrl)"
 
-        try
+        # Check if we're running PowerShell 7+ or Windows PowerShell 5.1
+        if ($PSVersionTable.PSVersion.Major -ge 7)
         {
-            $global:DefaultFive9AdminClient = New-WebServiceProxy -Uri $wsdl -Namespace "PSFive9Admin" -Class "PSFive9Admin" -ErrorAction: Stop
+            Write-Verbose "Using PowerShell 7+ SOAP client implementation"
+            
+            # Load the SOAP client class if not already loaded
+            $soapClientPath = Join-Path $PSScriptRoot "Five9SoapClient.ps1"
+            if (Test-Path $soapClientPath)
+            {
+                # Dot-source the class definition
+                . $soapClientPath
+            }
+            else
+            {
+                throw "Five9SoapClient.ps1 not found at: $soapClientPath"
+            }
+            
+            # Create new SOAP client using HttpClient-based implementation
+            $global:DefaultFive9AdminClient = [Five9SoapClient]::new(
+                $endpointUrl,
+                $Credential.UserName,
+                $Credential.GetNetworkCredential().Password
+            )
+            
+            $global:DefaultFive9AdminClient.Version = $Version
+            $global:DefaultFive9AdminClient.DataCenter = $DataCenter
+            
+            # Add method wrappers for compatibility
+            $addMethodsPath = Join-Path $PSScriptRoot "Add-Five9SoapMethods.ps1"
+            if (Test-Path $addMethodsPath)
+            {
+                . $addMethodsPath
+                Add-Five9SoapMethods -Client $global:DefaultFive9AdminClient
+            }
         }
-        catch
+        else
         {
-            Write-Verbose "Failed to download WSDL file. Using local file: $("$PSScriptRoot/Five9Admin.wsdl")"
-            $global:DefaultFive9AdminClient = New-WebServiceProxy "$PSScriptRoot/Five9Admin.wsdl" -Namespace "PSFive9Admin" -Class "PSFive9Admin" -ErrorAction: Stop
+            Write-Verbose "Using Windows PowerShell 5.1 New-WebServiceProxy implementation"
+            
+            # Use traditional New-WebServiceProxy for Windows PowerShell 5.1
+            $wsdl = "https://$baseUrl/wsadmin/v$($Version)/AdminWebService?wsdl&user=$($Credential.Username)"
+            
+            try
+            {
+                $global:DefaultFive9AdminClient = New-WebServiceProxy -Uri $wsdl -Namespace "PSFive9Admin" -Class "PSFive9Admin" -ErrorAction: Stop
+            }
+            catch
+            {
+                Write-Verbose "Failed to download WSDL file. Using local file: $("$PSScriptRoot/Five9Admin.wsdl")"
+                $global:DefaultFive9AdminClient = New-WebServiceProxy "$PSScriptRoot/Five9Admin.wsdl" -Namespace "PSFive9Admin" -Class "PSFive9Admin" -ErrorAction: Stop
+            }
+
+            $global:DefaultFive9AdminClient.Credentials = $Credential
+            $global:DefaultFive9AdminClient.Credentials.UserName = $Credential.UserName
+            $global:DefaultFive9AdminClient.Credentials.Domain = $null
+
+            $global:DefaultFive9AdminClient | Add-Member -MemberType NoteProperty -Name Five9DomainName -Value $null -Force
+            $global:DefaultFive9AdminClient | Add-Member -MemberType NoteProperty -Name Five9DomainId -Value $null -Force
+            $global:DefaultFive9AdminClient | Add-Member -MemberType NoteProperty -Name Version -Value $null -Force
+            $global:DefaultFive9AdminClient | Add-Member -MemberType NoteProperty -Name DataCenter -Value $null -Force
+
+            $global:DefaultFive9AdminClient.Timeout = 1000000
         }
-
-        $global:DefaultFive9AdminClient.Credentials = $Credential
-        $global:DefaultFive9AdminClient.Credentials.UserName = $Credential.UserName
-        $global:DefaultFive9AdminClient.Credentials.Domain = $null
-
-        $global:DefaultFive9AdminClient | Add-Member -MemberType NoteProperty -Name Five9DomainName -Value $null -Force
-        $global:DefaultFive9AdminClient | Add-Member -MemberType NoteProperty -Name Five9DomainId -Value $null -Force
-        $global:DefaultFive9AdminClient | Add-Member -MemberType NoteProperty -Name Version -Value $null -Force
-        $global:DefaultFive9AdminClient | Add-Member -MemberType NoteProperty -Name DataCenter -Value $null -Force
-
-        $global:DefaultFive9AdminClient.Timeout = 1000000
 
     }
     catch
@@ -123,7 +166,17 @@
     # test credentails
     try
     {
-        $vccConfig = $global:DefaultFive9AdminClient.getVCCConfiguration()
+        if ($PSVersionTable.PSVersion.Major -ge 7)
+        {
+            # Use the new SOAP client method invocation (with empty hashtable for no parameters)
+            $vccConfig = $global:DefaultFive9AdminClient.InvokeMethod('getVCCConfiguration', @{})
+        }
+        else
+        {
+            # Use traditional method call for Windows PowerShell 5.1
+            $vccConfig = $global:DefaultFive9AdminClient.getVCCConfiguration()
+        }
+        
         Write-Verbose "Connection established to domain id $($vccConfig.domainId) ($($vccConfig.domainName))"
 
         $global:DefaultFive9AdminClient.Five9DomainName = $vccConfig.domainName
@@ -134,7 +187,14 @@
     }
     catch
     {
-        $errorMessage = ($_.Exception.Message) -replace 'Exception calling "getVCCConfiguration" with "0" argument\(s\)\: '
+        if ($PSVersionTable.PSVersion.Major -ge 7)
+        {
+            $errorMessage = $_.Exception.Message
+        }
+        else
+        {
+            $errorMessage = ($_.Exception.Message) -replace 'Exception calling "getVCCConfiguration" with "0" argument\(s\)\: '
+        }
         throw "Error connecting to Five9 admin web service. Please check your credentials and try again. $errorMessage"
         return
     }
